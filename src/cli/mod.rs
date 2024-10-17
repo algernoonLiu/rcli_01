@@ -10,7 +10,6 @@ pub use self::csv::OutputFormat;
 /// 命令行参数操作结构体定义
 /// cmd: Subcommand 命令行子命令
 ///
-///
 #[derive(Debug, Parser)]
 #[command(name = "rcli", version, author, about, long_about = None)]
 pub struct Opts {
