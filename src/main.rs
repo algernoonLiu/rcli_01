@@ -16,7 +16,13 @@ fn main() -> anyhow::Result<()> {
             process_csv(&opts.input, output, opts.format)?;
         }
         Subcommand::Genpass(opts) => {
-            process_gen_pass(opts.length, opts.uppercase, opts.lowercase, opts.numbers, opts.symbols)?;
+            process_gen_pass(
+                opts.length,
+                opts.uppercase,
+                opts.lowercase,
+                opts.numbers,
+                opts.symbols,
+            )?;
         }
     }
     Ok(())

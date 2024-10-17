@@ -1,17 +1,19 @@
 use anyhow::Ok;
 use rand::seq::SliceRandom;
+use zxcvbn::zxcvbn;
 
 const UPPER: &[u8] = b"ABCDEFGHJKLMNPQRSTUVWXYZ";
 const LOWER: &[u8] = b"abcdefghijkmnopqrstuvwxyz";
 const NUMBERS: &[u8] = b"123456789";
-const SYMBOLS: &[u8] = b"!@#$%^&*-_\\|.?~";
+const SYMBOLS: &[u8] = b"!@#$%^&*?";
 
-pub fn process_gen_pass(length: u8, 
-    upper: bool, 
-    lower: bool, 
-    numbers: bool, 
-    symbols: bool) -> anyhow::Result<()> {
-    
+pub fn process_gen_pass(
+    length: u8,
+    upper: bool,
+    lower: bool,
+    numbers: bool,
+    symbols: bool,
+) -> anyhow::Result<()> {
     let mut rng = rand::thread_rng();
     let mut pass = Vec::new();
     let mut chars = Vec::new();
@@ -42,8 +44,12 @@ pub fn process_gen_pass(length: u8,
 
     pass.shuffle(&mut rng);
 
-    println!("{}", String::from_utf8(pass)?);
+    let password = String::from_utf8(pass)?;
+
+    println!("password generated: {}", password);
+
+    let estimate = zxcvbn(&password, &[]);
+    eprintln!("password estimate score: {}", estimate.score());
 
     Ok(())
 }
-

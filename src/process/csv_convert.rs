@@ -7,7 +7,6 @@ use crate::opts::OutputFormat;
 
 ///
 /// Csv文件中的一条记录
-/// 
 // #[derive(Debug, Serialize, Deserialize)]
 // #[serde(rename_all = "PascalCase")]
 // pub struct CsvRecord {
@@ -28,9 +27,8 @@ use crate::opts::OutputFormat;
 /// 读取输入的csv文件，并转换为json写入到给定的文件
 /// @param input 输入的csv文件路径
 /// @param output 输出的json文件路径
-/// 
 /// @return Ok(()) if success, Err(anyhow::Error) if failed
-/// 
+///
 // pub fn process_csv_0(input: &str, output: &str) -> anyhow::Result<()> {
 //     let mut reader = Reader::from_path(input)?;
 //     let mut ret = Vec::with_capacity(128);
@@ -41,10 +39,8 @@ use crate::opts::OutputFormat;
 
 //     let json = serde_json::to_string_pretty(&ret)?;
 //     fs::write(output, json)?;
-
 //     Ok(())
 // }
-
 
 pub fn process_csv(input: &str, output: String, format: OutputFormat) -> anyhow::Result<()> {
     let mut reader = Reader::from_path(input)?;
