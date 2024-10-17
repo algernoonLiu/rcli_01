@@ -1,5 +1,5 @@
 use csv::Reader;
-use serde::{Deserialize, Serialize};
+// use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::fs;
 
@@ -8,21 +8,21 @@ use crate::opts::OutputFormat;
 ///
 /// Csv文件中的一条记录
 /// 
-#[derive(Debug, Serialize, Deserialize)]
-#[serde(rename_all = "PascalCase")]
-pub struct CsvRecord {
-    #[serde(rename = "Publish Time")]
-    publish_time: String,
-    title: String,
-    position: u8,
-    #[serde(rename = "Read Count")]
-    read_count: u32,
-    #[serde(rename = "Like Count")]
-    like_count: u32,
-    #[serde(rename = "View Count")]
-    view_count: u32,
-    link: String,
-}
+// #[derive(Debug, Serialize, Deserialize)]
+// #[serde(rename_all = "PascalCase")]
+// pub struct CsvRecord {
+//     #[serde(rename = "Publish Time")]
+//     publish_time: String,
+//     title: String,
+//     position: u8,
+//     #[serde(rename = "Read Count")]
+//     read_count: u32,
+//     #[serde(rename = "Like Count")]
+//     like_count: u32,
+//     #[serde(rename = "View Count")]
+//     view_count: u32,
+//     link: String,
+// }
 
 ///
 /// 读取输入的csv文件，并转换为json写入到给定的文件
@@ -31,19 +31,19 @@ pub struct CsvRecord {
 /// 
 /// @return Ok(()) if success, Err(anyhow::Error) if failed
 /// 
-pub fn process_csv_0(input: &str, output: &str) -> anyhow::Result<()> {
-    let mut reader = Reader::from_path(input)?;
-    let mut ret = Vec::with_capacity(128);
-    for result in reader.deserialize() {
-        let record: CsvRecord = result?;
-        ret.push(record);
-    }
+// pub fn process_csv_0(input: &str, output: &str) -> anyhow::Result<()> {
+//     let mut reader = Reader::from_path(input)?;
+//     let mut ret = Vec::with_capacity(128);
+//     for result in reader.deserialize() {
+//         let record: CsvRecord = result?;
+//         ret.push(record);
+//     }
 
-    let json = serde_json::to_string_pretty(&ret)?;
-    fs::write(output, json)?;
+//     let json = serde_json::to_string_pretty(&ret)?;
+//     fs::write(output, json)?;
 
-    Ok(())
-}
+//     Ok(())
+// }
 
 
 pub fn process_csv(input: &str, output: String, format: OutputFormat) -> anyhow::Result<()> {
