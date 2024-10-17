@@ -24,6 +24,9 @@ fn main() -> anyhow::Result<()> {
                 opts.symbols,
             )?;
         }
+        Subcommand::Base64(opts) => {
+            println!("base64: {:?}", opts)
+        }
     }
     Ok(())
 }
