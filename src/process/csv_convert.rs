@@ -1,9 +1,8 @@
 use csv::Reader;
 // use serde::{Deserialize, Serialize};
+use crate::cli::OutputFormat;
 use serde_json::Value;
 use std::fs;
-
-use crate::opts::OutputFormat;
 
 ///
 /// Csv文件中的一条记录
