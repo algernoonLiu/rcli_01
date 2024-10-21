@@ -1,5 +1,7 @@
 use clap::{Parser, ValueEnum};
-use std::{fmt::Display, path::Path, str::FromStr};
+use std::{fmt::Display, str::FromStr};
+
+use super::verify_input_file;
 
 ///
 /// 读取输入的csv文件内容，将内容转换为json格式，并输出到指定文件
@@ -14,7 +16,7 @@ pub struct CsvOpt {
     // pub output: String,
     #[arg(short, long)]
     pub output: Option<String>,
-    #[arg(value_enum, long, value_parser = parse_format, default_value = "json")]
+    #[arg(long, value_parser = parse_format, default_value = "json")]
     pub format: OutputFormat,
     /// 分隔符
     #[arg(short, long, default_value = ",")]
@@ -58,18 +60,5 @@ impl FromStr for OutputFormat {
             "yaml" => Ok(OutputFormat::Yaml),
             why => Err(anyhow::anyhow!("Unsupported format: {}", why)),
         }
-    }
-}
-
-///
-/// 验证文件是否存在
-///
-/// return: Result<String, &'static str> 返回文件路径或错误信息
-///
-fn verify_input_file(filename: &str) -> Result<String, &'static str> {
-    if Path::new(filename).exists() {
-        Ok(filename.into())
-    } else {
-        Err("File dose not exist")
     }
 }
