@@ -13,6 +13,10 @@ pub enum TextSubCommand {
     Verify(TextVerifyOpts),
     #[command(about = "Generate a new key")]
     Generate(TextKeyGenerateOpts),
+    #[command(about = "Encrypt a message with a public key")]
+    Encrypt(TextEncryptOpts),
+    #[command(about = "Decrypt a message with a private key")]
+    Decrypt(TextDecryptOpts),
 }
 
 #[derive(Debug, Parser)]
@@ -51,6 +55,29 @@ pub struct TextKeyGenerateOpts {
     /// The output file to write the key to
     #[arg(short, long, value_parser = verify_path)]
     pub output: PathBuf,
+}
+
+#[derive(Debug, Parser)]
+pub struct TextEncryptOpts {
+    /// The text message or file to encrypt
+    #[arg(short, long, value_parser = verify_file, default_value = "-")]
+    pub input: String,
+    /// The key to use for encryption
+    #[arg(short, long)]
+    pub key: String,
+}
+
+#[derive(Debug, Parser)]
+pub struct TextDecryptOpts {
+    /// The text message or file to decrypt
+    #[arg(short, long, value_parser = verify_file, default_value = "-")]
+    pub input: String,
+    /// The key to use for decryption
+    #[arg(short, long)]
+    pub key: String,
+    /// The nonce to use for decryption
+    #[arg(short, long)]
+    pub nonce: String,
 }
 
 #[derive(Debug, Clone, Copy, ValueEnum)]

@@ -4,7 +4,11 @@ use crate::{get_reader, process::process_gen_pass, TextSignFormat};
 use anyhow::{Ok, Result};
 use base64::{engine::general_purpose::URL_SAFE_NO_PAD, Engine as _};
 use ed25519_dalek::{Signature, Signer, SigningKey, Verifier, VerifyingKey};
-use rand::rngs::OsRng;
+use rand::rngs::OsRng as RandOsRng;
+// use chacha20poly1305::{
+//     aead::{Aead, AeadCore, KeyInit, OsRng},
+//     ChaCha20Poly1305, Nonce
+// };
 
 trait TextSign {
     // Sign the text from the reader and return the signature
@@ -80,6 +84,22 @@ pub fn process_text_keygen(format: TextSignFormat) -> Result<Vec<Vec<u8>>> {
         TextSignFormat::Ed22519 => Ed22519Signer::generate(),
     }
 }
+
+// pub fn process_text_encrypt(input: &str) -> Result<String> {
+//     let mut reader = get_reader(input)?;
+//     let mut buf = String::new();
+//     reader.read_to_string(&mut buf)?;
+//     let buf = buf.trim();
+//     // 需要加密的 message
+//     let message = String::from_utf8(buf.as_bytes().to_vec())?;
+
+//     let key = ChaCha20Poly1305::generate_key(&mut OsRng);
+//     let cipher = ChaCha20Poly1305::new(&key);
+//     let nonce = ChaCha20Poly1305::generate_nonce(&mut OsRng);
+//     let ciphertext = cipher.encrypt(&nonce, message.as_ref())?;
+//     Ok()
+// }
+
 
 impl TextSign for Blake3 {
     fn sign(&self, reader: &mut dyn Read) -> Result<Vec<u8>> {
@@ -185,7 +205,7 @@ impl KeyGenerater for Blake3 {
 
 impl KeyGenerater for Ed22519Signer {
     fn generate() -> Result<Vec<Vec<u8>>> {
-        let mut csprng = OsRng;
+        let mut csprng = RandOsRng;
         let signing_key: SigningKey = SigningKey::generate(&mut csprng);
         let pk = signing_key.verifying_key().as_bytes().to_vec();
         let sk = signing_key.to_bytes().to_vec();

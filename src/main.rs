@@ -71,6 +71,12 @@ fn main() -> anyhow::Result<()> {
                         }
                     }
                 }
+                TextSubCommand::Encrypt(opts) => {
+                    println!("Implement text encrypt: {:?}", &opts)
+                }
+                TextSubCommand::Decrypt(opts) => {
+                    println!("Implement text decrypt: {:?}", &opts)
+                }
             }
         }
     }
