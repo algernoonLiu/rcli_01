@@ -14,6 +14,11 @@ pub fn verify_file(filename: &str) -> Result<String, &'static str> {
     }
 }
 
+///
+/// 验证文件是否存在
+///
+/// return: Result<PathBuf, &'static str> 返回文件路径或错误信息
+///
 pub fn verify_path(path: &str) -> Result<PathBuf, &'static str> {
     let path = Path::new(path);
     if path.exists() && path.is_dir() {
