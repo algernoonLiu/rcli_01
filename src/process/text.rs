@@ -197,6 +197,9 @@ impl KeyGenerater for Ed22519Signer {
 mod tests {
     use super::*;
 
+    ///
+    /// 运行用例前先使用 generate 工具生成对应的key文件
+    /// 
     #[test]
     fn test_blake3_sign_verify() -> Result<()> {
         let blake3 = Blake3::load("fixtures/blake3.txt")?;
@@ -207,6 +210,9 @@ mod tests {
         Ok(())
     }
 
+    /// 
+    /// 运行用例前先使用 generate 工具生成对应的sk和pk文件
+    /// 
     #[test]
     fn test_ed22519_sign_verify() -> Result<()> {
         let signer = Ed22519Signer::load("fixtures/ed25519.sk")?;
