@@ -1,13 +1,16 @@
 mod base64;
 mod csv;
 mod genpass;
-
-use std::path::Path;
+mod text;
 
 use self::{csv::CsvOpt, genpass::GenpassOpt};
 use clap::Parser;
 
-pub use self::{base64::Base64Format, base64::Base64SubCommand, csv::OutputFormat};
+pub use self::{
+    base64::{Base64Format, Base64SubCommand},
+    csv::OutputFormat,
+    text::{TextSignFormat, TextSubCommand},
+};
 
 ///
 /// 命令行参数操作结构体定义
@@ -34,29 +37,6 @@ pub enum Subcommand {
     Genpass(GenpassOpt),
     #[command(subcommand)]
     Base64(Base64SubCommand),
-}
-
-///
-/// 验证文件是否存在
-///
-/// return: Result<String, &'static str> 返回文件路径或错误信息
-///
-fn verify_input_file(filename: &str) -> Result<String, &'static str> {
-    if filename == "-" || Path::new(filename).exists() {
-        Ok(filename.into())
-    } else {
-        Err("File dose not exist")
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_verify_input_file() {
-        assert_eq!(verify_input_file("-"), Ok("-".into()));
-        assert_eq!(verify_input_file("Cargo.toml"), Ok("Cargo.toml".into()));
-        assert_eq!(verify_input_file("not_exist_file"), Err("File dose not exist"));
-    }
+    #[command(subcommand)]
+    Text(TextSubCommand),
 }

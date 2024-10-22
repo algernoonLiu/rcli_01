@@ -1,7 +1,7 @@
 use clap::{Parser, ValueEnum};
 use std::{fmt::Display, str::FromStr};
 
-use super::verify_input_file;
+use crate::verify_file;
 
 ///
 /// 读取输入的csv文件内容，将内容转换为json格式，并输出到指定文件
@@ -9,7 +9,7 @@ use super::verify_input_file;
 #[derive(Debug, Parser)]
 pub struct CsvOpt {
     /// 输入文件路径
-    #[arg(short, long, required = true, value_parser = verify_input_file)]
+    #[arg(short, long, required = true, value_parser = verify_file)]
     pub input: String,
     /// 输出文件路径
     // #[arg(short, long, default_value = "output.json")]
