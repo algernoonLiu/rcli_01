@@ -80,7 +80,7 @@ async fn main() -> anyhow::Result<()> {
         }
         Subcommand::Http(opts) => match opts {
             HttpSubCommand::Serve(opts) => {
-                process_http_serve(&opts.dir, opts.port).await?;
+                process_http_serve(opts.dir, opts.port).await?;
             }
         }
     }
